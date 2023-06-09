@@ -20,7 +20,9 @@ app.post('/', upload, async (req, res) => {
 
     const { imageId, error } = await uploadToCloudinary(req.file);
     if (error)
-      return res.status(400).json({ status: 400, message: error.message });
+      return res
+        .status(400)
+        .json({ status: 400, message: error.error.message });
 
     res.status(201).json({ imageId, uploaded: true });
   } catch (error) {
@@ -32,7 +34,9 @@ app.get('/images', async (req, res) => {
   try {
     const { imagesUrls, error } = await getImagesUrls();
     if (error)
-      return res.status(400).json({ status: 400, message: error.message });
+      return res
+        .status(500)
+        .json({ status: 500, message: error.error.message });
 
     res.json(imagesUrls);
   } catch (error) {

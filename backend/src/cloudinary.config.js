@@ -32,13 +32,9 @@ async function uploadToCloudinary(file) {
 
 async function getImagesUrls() {
   try {
-    const { resources } = await cloudinary.api.resources_by_asset_folder(
-      'upload-image-cloudinary',
-      {
-        max_results: 6,
-        direction: -1,
-      }
-    );
+    const { resources } = await cloudinary.api.resources({
+      direction: -1,
+    });
 
     const imagesUrls = resources.map((resource) => {
       return cloudinary.url(resource.public_id);
@@ -46,7 +42,6 @@ async function getImagesUrls() {
 
     return { imagesUrls };
   } catch (error) {
-    console.log(error);
     return { error };
   }
 }
